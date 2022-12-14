@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Employee[] workers = new Employee[10];
@@ -17,8 +19,14 @@ public class Main {
         int sum = sum(workers);
         String employeeMinSalary = employeeMinSalary(workers);
         String employeeMaxSalary = employeeMaxSalary(workers);
-        int averageSalary = averageSalary(workers);
+        int averageSalary = averageSalary(workers,sum);
         String displayFio = displayFio(workers);
+        int indexationSalary = indexationSalary(workers);
+        String employeeMinSalaryByDepartment = employeeMinSalaryByDepartment(workers, sum);
+        String employeeMaxSalaryByDepartment = employeeMaxSalaryByDepartment(workers);
+        int sumByDepartment = sumByDepartment(workers);
+        int averageSalaryByDepartment = averageSalaryByDepartment(workers);
+        int indexationSalaryByDepartment = indexationSalaryByDepartment(workers);
     }
 
     public static Employee allData(Employee[] workers){
@@ -65,8 +73,8 @@ public class Main {
         return employeeMaxSalary;
     }
 
-    public static int averageSalary(Employee[] workers){
-        int averageSalary = sum(workers) / workers.length;
+    public static int averageSalary(Employee[] workers, int sum){
+        int averageSalary = sum / workers.length;
         System.out.println("Среднее значение зарплат всех сотрудников составит - " + averageSalary);
         return averageSalary;
     }
@@ -80,4 +88,111 @@ public class Main {
         return displayFio;
     }
 
+    public static int indexationSalary(Employee[] workers){
+        System.out.println("Введите величену индексации зарплаты в %");
+        Scanner scanner = new Scanner(System.in);
+        int indexation = scanner.nextInt();
+        int indexationSalary = 0;
+        for (int i = 0; i < workers.length; i++) {
+            indexationSalary =workers[i].getSalary() + workers[i].getSalary() * indexation / 100;
+            System.out.println("Проиндексированая зарплата у " + workers[i].getFio() + ", составит: " + indexationSalary);
+        }
+        return indexationSalary;
+    }
+
+    public static String employeeMinSalaryByDepartment(Employee[] workers, int sum){
+        System.out.println("Введите номер отдела для отбора по минимальной зарплате");
+        Scanner scanner = new Scanner(System.in);
+        int department = scanner.nextInt();
+        String employeeMinSalaryByDepartment = workers[0].getFio();
+        int minSalaryByDepartment = sum;
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getDepartment() == department){
+                if (workers[i].getSalary() < minSalaryByDepartment){
+                    employeeMinSalaryByDepartment = workers[i].getFio();
+                    minSalaryByDepartment = workers[i].getSalary();
+                }
+            }
+        }
+        System.out.println("Сотрудник в отделе №" + department + ", с минимальной зарплатой - " + minSalaryByDepartment + ", это: " + employeeMinSalaryByDepartment);
+        return employeeMinSalaryByDepartment;
+    }
+
+    public static String employeeMaxSalaryByDepartment(Employee[] workers){
+        System.out.println("Введите номер отдела для отбора по максимальной зарплате");
+        Scanner scanner = new Scanner(System.in);
+        int department = scanner.nextInt();
+        String employeeMaxSalaryByDepartment = workers[0].getFio();
+        int maxSalaryByDepartment= 0;
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getDepartment() == department){
+                if (workers[i].getSalary() > maxSalaryByDepartment){
+                    employeeMaxSalaryByDepartment = workers[i].getFio();
+                    maxSalaryByDepartment = workers[i].getSalary();
+                }
+            }
+        }
+        System.out.println("Сотрудник в отделе №" + department + ", с максимальной зарплатой - " + maxSalaryByDepartment + ", это: " + employeeMaxSalaryByDepartment);
+        return employeeMaxSalaryByDepartment;
+    }
+
+    public static int sumByDepartment(Employee[] workers){
+        System.out.println("Введите номер отдела для затрат на зарплаты в месяц");
+        Scanner scanner = new Scanner(System.in);
+        int department = scanner.nextInt();
+        int sumByDepartment = 0;
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getDepartment() == department){
+                sumByDepartment += workers[i].getSalary();
+            }
+        }
+        System.out.println("Сумма затрат на зарплаты в отделе №" + department + " в месяц составит - " + sumByDepartment);
+        return sumByDepartment;
+    }
+
+    public static int averageSalaryByDepartment(Employee[] workers) {
+        System.out.println("Введите номер отдела для средней зарплаты в месяц");
+        Scanner scanner = new Scanner(System.in);
+        int department = scanner.nextInt();
+        int sumByDepartment = 0;
+        int numberOfEmployees = 0;
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getDepartment() == department) {
+                sumByDepartment += workers[i].getSalary();
+                numberOfEmployees ++;
+            }
+        }
+        System.out.println("Среднее значение зарплат у сотрудников №" + department + " в месяц составит - " + sumByDepartment / numberOfEmployees);
+        return sumByDepartment / numberOfEmployees;
+    }
+
+    public static int indexationSalaryByDepartment(Employee[] workers){
+        System.out.println("Введите номер отдела для индексации зарплаты");
+        Scanner scanner = new Scanner(System.in);
+        int department = scanner.nextInt();
+        System.out.println("Введите величену индексации зарплаты отдела в %");
+        int indexation = scanner.nextInt();
+        int indexationSalaryByDepartment = 0;
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getDepartment() == department){
+                indexationSalaryByDepartment =workers[i].getSalary() + workers[i].getSalary() * indexation / 100;
+                System.out.println("Проиндексированая зарплата у " + workers[i].getFio() + ", в отделе №" + department +", составит: " + indexationSalaryByDepartment);
+            }
+        }
+        return indexationSalaryByDepartment;
+    }
+
+    public static String displayFioByDepartment(Employee[] workers){
+        System.out.println("Введите номер отдела для вывода всех сотрудников");
+        Scanner scanner = new Scanner(System.in);
+        int department = scanner.nextInt();
+        System.out.println("Cписок Ф.И.О. всех сотрудников отдела №" + department);
+        String displayFio = workers[0].getFio();
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getDepartment() == department){
+                System.out.println("Ф.И.О сотрудника- " + getFio() + "; Отдел - " + department + "; Зарплата - " + salary + "; ID сотрудника - " + id;);
+            }
+        }
+        return displayFio;
+    }
 }
