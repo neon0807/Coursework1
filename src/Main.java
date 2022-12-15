@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Employee[] workers = new Employee[10];
         workers[0] = new Employee("Aaa Aaa Aaa", 1, 30000);
         workers[1] = new Employee("Bbb Bbb Bbb", 2, 35000);
@@ -27,6 +28,9 @@ public class Main {
         int sumByDepartment = sumByDepartment(workers);
         int averageSalaryByDepartment = averageSalaryByDepartment(workers);
         int indexationSalaryByDepartment = indexationSalaryByDepartment(workers);
+        String displayFioByDepartment = displayFioByDepartment(workers);
+        int withLowerSalary = withLowerSalary(workers);
+        int withMoreSalary = withMoreSalary(workers);
     }
 
     public static Employee allData(Employee[] workers){
@@ -187,12 +191,38 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int department = scanner.nextInt();
         System.out.println("Cписок Ф.И.О. всех сотрудников отдела №" + department);
-        String displayFio = workers[0].getFio();
+        String displayFioByDepartment = workers[0].getFio();
         for (int i = 0; i < workers.length; i++) {
             if (workers[i].getDepartment() == department){
-                System.out.println("Ф.И.О сотрудника- " + getFio() + "; Отдел - " + department + "; Зарплата - " + salary + "; ID сотрудника - " + id;);
+                System.out.println("Ф.И.О. сотрудника - " + workers[i].getFio() + "; Зарплата - " + workers[i].getSalary() + "; ID сотрудника - " + workers[i].getId());
             }
         }
-        return displayFio;
+        return displayFioByDepartment;
+    }
+
+    public static int withLowerSalary(Employee[] workers){
+        System.out.println("Введите сумму для сравнения зарплаты:");
+        Scanner scanner = new Scanner(System.in);
+        int sumMin = scanner.nextInt();
+        System.out.println("Список сотрудников с зарплатой меньше " + sumMin + ":");
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getSalary() < sumMin){
+                System.out.println("ID сотрудника - " + workers[i].getId() + "; Ф.И.О. сотрудника - " + workers[i].getFio() + "; Зарплата - " + workers[i].getSalary());
+            }
+        }
+        return sumMin;
+    }
+
+    public static int withMoreSalary(Employee[] workers){
+        System.out.println("Введите сумму для сравнения зарплаты:");
+        Scanner scanner = new Scanner(System.in);
+        int sumMax = scanner.nextInt();
+        System.out.println("Список сотрудников с зарплатой больше или равно " + sumMax + ":");
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i].getSalary() >= sumMax){
+                System.out.println("ID сотрудника - " + workers[i].getId() + "; Ф.И.О. сотрудника - " + workers[i].getFio() + "; Зарплата - " + workers[i].getSalary());
+            }
+        }
+        return sumMax;
     }
 }
