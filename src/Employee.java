@@ -3,8 +3,8 @@ public class Employee {
     private String fio;
     private int department;
     private int salary;
-    private int id = 1;
-    public static int counter;
+    private int id;
+    public static int counter = 1;
 
 
 
@@ -12,7 +12,7 @@ public class Employee {
         this.fio = fio;
         this.department = department;
         this.salary = salary;
-        id += counter++;
+        id = counter++;
     }
 
     public String getFio(){

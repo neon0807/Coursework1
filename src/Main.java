@@ -1,7 +1,9 @@
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
+
 
         Employee[] workers = new Employee[10];
         workers[0] = new Employee("Aaa Aaa Aaa", 1, 30000);
